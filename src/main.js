@@ -1,109 +1,91 @@
-const socialMedias = getSocialMedias();
+let state = [];
 
-let store;
-
-window.onload = function () {
-
-  const initialData = this.loadState();
-
-  store = Redux.createStore(reducer, initialData, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-
-  store.subscribe(function () {
-    this.saveState(store.getState());
-    this.render();
-  });
-
-
+window.onload = () => {
+  state = this.loadStateFromStorage();
+  this.saveState();
   this.render();
 };
 
-function reducer(store = [], action) {
-  switch (action.type) {
-    case 'CHECK_SOCIAL':
-      return [...store];
-    default:
-      return store;
+function loadStateFromStorage() {
+  try {
+    const serializedData = localStorage.getItem('state');
+    if (!!serializedData) {
+      return JSON.parse(serializedData);
+    }
+  } catch (error) {
+    console.log(error);
   }
-}
-
-function selectSocial() {
-  var socialMediaOptions = Array.from(document.querySelectorAll('label[id^="label-"]'));
-
-  for (var i = 0; i < socialMediaOptions.length; i++) {
-    var element = socialMediaOptions[i];
-    element.addEventListener('click', (event) => {
-      key = event.target.getAttribute('data-key');
-      console.log(key);
-      checkSocial(key);
-    });
-  }
-};
-
-function checkSocial(key) {
-  const checkBox = document.getElementById('cb-' + key);
-  let socialMediaStore = store.getState();
-  social = socialMediaStore[key];
-  console.log(checkBox.checked);
-  if (!checkBox.checked) {
-    social.enabled = true;
-  } else {
-    social.enabled = false;
-  }
-  console.log(socialMediaStore);
-  store.dispatch({
-    type: 'CHECK_SOCIAL',
+  return socialMedias.map((socialMedia, key) => {
+    return {
+      ...socialMedia,
+      enabled: true,
+      position: key
+    }
   });
 }
 
-function render() {
-  const $principal = document.getElementById('principal');
-  const $secondary = document.getElementById('secondary');
-  const $administrator = document.getElementById('administrator');
-  const socialMediaStore = store.getState();
-
-  if (typeof ($principal) != 'undefined' && $principal != null) {
-    let principalHtml = '';
-
-    socialMediaStore.forEach(social => {
-      if (social.enabled) {
-        principalHtml += renderSelectedSocialMedias(social);
-      }
-    });
-
-    $principal.innerHTML = principalHtml;
+function saveState() {
+  try {
+    let serializedData = JSON.stringify(state);
+    localStorage.setItem('state', serializedData);
+  } catch (error) {
+    console.log(error);
   }
+}
 
-  if (typeof ($secondary) != 'undefined' && $secondary != null) {
-    let secondaryHtml = '';
+function render() {
+  const $administrator = document.getElementById('administrator');
+  const _state = this.loadStateFromStorage();
+  if (typeof ($administrator) != 'undefined' && $administrator != null) {
+    let administratorHtml = '';
+    _state.forEach((social, index) => {
+      administratorHtml += renderSocialMediasForAdministrator(social, index);
+    });
+    $administrator.innerHTML = administratorHtml;
 
-    socialMediaStore.forEach(social => {
-      if (!social.enabled) {
-        secondaryHtml += renderSelectedSocialMedias(social);
+    var socialMediaOptions = Array.from(document.querySelectorAll('label[id^="label-"]'));
+    for (var i = 0; i < socialMediaOptions.length; i++) {
+      var element = socialMediaOptions[i];
+      element.addEventListener('click', (event) => {
+        key = event.target.getAttribute('data-key');
+        checkUncheckSocial(key);
+      });
+    }
+  } else {
+    const $principal = document.getElementById('principal');
+    const $secondary = document.getElementById('secondary');
+    let principalHtml = '';
+    _state.forEach(social => {
+      if (social.enabled) {
+        principalHtml += renderSocialMedias(social);
       }
     });
-
+    let secondaryHtml = '';
+    _state.forEach(social => {
+      if (!social.enabled) {
+        secondaryHtml += renderSocialMedias(social);
+      }
+    });
+    $principal.innerHTML = principalHtml;
     $secondary.innerHTML = secondaryHtml;
   }
 
-  if (typeof ($administrator) != 'undefined' && $administrator != null) {
-    let administratorHtml = '';
-    socialMediaStore.forEach((social, index) => {
-      administratorHtml += renderSocialMedias(social, index);
-    });
-    $administrator.innerHTML = administratorHtml;
-  }
-
-  this.selectSocial();
 }
 
-function renderSelectedSocialMedias(social) {
+function checkUncheckSocial(key) {
+  const checkBox = document.getElementById('cb-' + key);
+  state[key].enabled = !checkBox.checked;
+  this.saveState();
+}
+
+function renderSocialMedias(social) {
   return `<a id="${social.name}" class="item" href="${social.url}" target="_blank">
             <img src="${social.img}" alt="${social.name}" width="40px"/>
             <span>${social.displayName}</span>
           </a>`;
 }
 
-function renderSocialMedias(social, index) {
+function renderSocialMediasForAdministrator(social, index) {
   if (social.enabled) {
     return `<a  id="${social.name}" class="item">
               <input type="checkbox" id="cb-${index}" checked/>
@@ -120,28 +102,5 @@ function renderSocialMedias(social, index) {
               </label>
               <span>${social.displayName}</span>
             </a>`;
-  }
-}
-
-function loadState() {
-  try {
-    const serializedData = localStorage.getItem('state')
-    if (serializedData === null) {
-      console.log('No hay el texto');
-      return socialMedias
-    }
-    return JSON.parse(serializedData)
-  } catch (error) {
-    console.log(error);
-    return socialMedias
-  }
-}
-
-function saveState(state) {
-  try {
-    let serializedData = JSON.stringify(state);
-    localStorage.setItem('state', serializedData)
-  } catch (error) {
-    console.log(error);
   }
 }
