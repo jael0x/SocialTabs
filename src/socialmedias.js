@@ -1,3 +1,5 @@
+const version = 1;
+
 const socialMedias = [
   {
     name: 'instagram',
@@ -18,7 +20,7 @@ const socialMedias = [
     img: 'icons/gmail.png'
   },
   {
-    name: 'youTube',
+    name: 'youtube',
     displayName: 'YouTube',
     url: 'https://www.youtube.com/',
     img: 'icons/youtube.png'
@@ -36,7 +38,7 @@ const socialMedias = [
     img: 'icons/messenger.png'
   },
   {
-    name: 'linkedIn',
+    name: 'linkedin',
     displayName: 'LinkedIn',
     url: 'https://www.linkedin.com/',
     img: 'icons/linkedin.png'
@@ -86,7 +88,7 @@ const socialMedias = [
   {
     name: 'twitter',
     displayName: 'Twitter',
-    url: 'https://drive.google.com/drive/',
+    url: 'https://twitter.com/',
     img: 'icons/drive.png'
   }
 ];

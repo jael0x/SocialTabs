@@ -1,27 +1,45 @@
 let state = [];
 
 window.onload = () => {
-  state = this.loadStateFromStorage();
+  state = this.loadState();
   this.saveState();
   this.render();
 };
 
-function loadStateFromStorage() {
+function loadState() {
+  let _state = [];
   try {
     const serializedData = localStorage.getItem('state');
+    const storedVersion = localStorage.getItem('version');
     if (!!serializedData) {
-      return JSON.parse(serializedData);
+      _state = [...JSON.parse(serializedData)];
+      if (!storedVersion || !!storedVersion && version > storedVersion) {
+        _state = [...socialMedias.map((socialMedia, key) => {
+          let previousState = _state.find(item => item.name === socialMedia.name);
+          if (previousState)
+            return { ...previousState, ...socialMedia };
+          else
+            return {
+              ...socialMedia,
+              enabled: true,
+              position: key
+            };
+        })];
+        localStorage.setItem('version', version);
+      }
+    } else {
+      _state = [...socialMedias.map((socialMedia, key) => {
+        return {
+          ...socialMedia,
+          enabled: true,
+          position: key
+        }
+      })];
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
-  return socialMedias.map((socialMedia, key) => {
-    return {
-      ...socialMedia,
-      enabled: true,
-      position: key
-    }
-  });
+  return [..._state];
 }
 
 function saveState() {
@@ -35,7 +53,7 @@ function saveState() {
 
 function render() {
   const $administrator = document.getElementById('administrator');
-  const _state = this.loadStateFromStorage();
+  const _state = this.loadState();
   if (typeof ($administrator) != 'undefined' && $administrator != null) {
     let administratorHtml = '';
     _state.forEach((social, index) => {
