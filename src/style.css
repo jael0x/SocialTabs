@@ -1,10 +1,27 @@
 body {
     max-width: 400px;
     margin: auto;
-    font: 80% sans-serif;
+    font: 11px sans-serif;
+    min-width: 277px;
 }
 
-.container {
+h4 {
+    user-select: none;
+}
+
+.container-1 {
+    display: grid;
+    grid-template-columns: auto;
+    padding: 5px;
+}
+
+.container-2 {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 5px;
+}
+
+.container-3 {
     display: grid;
     grid-template-columns: auto auto auto;
     padding: 5px;
@@ -48,7 +65,7 @@ label img {
     transform: scale(0.9);
 }
 
-:checked + label img {
+:checked+label img {
     transform: scale(1);
     filter: grayscale(0);
     transition-duration: 0.4s;
@@ -61,7 +78,7 @@ label span {
     transition-duration: 0.2s;
 }
 
-:checked + label span {
+:checked+label span {
     color: black;
     transition-duration: 0.2s;
 }
@@ -82,8 +99,88 @@ label:before {
     transform: scale(0);
 }
 
-:checked + label:before {
+:checked+label:before {
     content: "✓";
     background-color: #125DB5;
     transform: scale(0.9);
+}
+
+#secondary {
+    display: none;
+    padding-top: 0;
+}
+
+#title-section {
+    display: flex;
+    align-items: center;
+}
+
+#title {
+    display: flex;
+    flex: 1;
+    align-self: center;
+    justify-content: center;
+}
+
+#icon-settings {
+    position: absolute;
+    right: 5px;
+    border-radius: 100%;
+}
+
+#svg {
+    width: 24px;
+    height: 24px
+}
+
+#scroll-down-section {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.bubble {
+    max-width: 150px;
+    padding: 5px;
+    border-radius: 100px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.bubble:hover {
+    -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05), 0 0 20px 0 rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05), 0 0 20px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05), 0 0 20px 0 rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.mouse-scroll-container {
+    display: flex;
+}
+
+.mouse-scroll {
+    margin-right: 5px;
+}
+
+.scroll-arrows {
+    display: block;
+    -ms-transform: rotate(45deg);
+    /* IE 9 */
+    -webkit-transform: rotate(45deg);
+    /* Chrome, Safari, Opera */
+    transform: rotate(45deg);
+    border-right: 1px solid #535554;
+    border-bottom: 1px solid #535554;
+    width: 5px;
+    height: 5px;
+}
+
+.first {
+    margin-top: -1px;
+}
+
+.second {
+    margin-top: -2px;
 }

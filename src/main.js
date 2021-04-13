@@ -1,10 +1,24 @@
 let state = [];
 
 window.onload = () => {
-  state = this.loadState();
-  this.saveState();
-  this.render();
+  state = loadState();
+  saveState();
+  render();
 };
+
+window.onmousewheel = (e) => {
+  if (e.wheelDelta < 0)
+    showMore();
+  else {
+    const secondary = document.getElementById('secondary');
+    secondary.style.display = 'none';
+  }
+}
+
+function showMore() {
+  const secondary = document.getElementById('secondary');
+  secondary.style.display = 'grid';
+}
 
 function loadState() {
   let _state = [];
@@ -15,7 +29,7 @@ function loadState() {
       _state = [...JSON.parse(serializedData)];
       if (!storedVersion || !!storedVersion && version > storedVersion) {
         _state = [...socialMedias.map((socialMedia, key) => {
-          let previousState = _state.find(item => item.name === socialMedia.name);
+          const previousState = _state.find(item => item.name === socialMedia.name);
           if (previousState)
             return { ...previousState, ...socialMedia };
           else
@@ -53,7 +67,7 @@ function saveState() {
 
 function render() {
   const $administrator = document.getElementById('administrator');
-  const _state = this.loadState();
+  const _state = loadState();
   if (typeof ($administrator) != 'undefined' && $administrator != null) {
     let administratorHtml = '';
     _state.forEach((social, index) => {
@@ -70,30 +84,43 @@ function render() {
       });
     }
   } else {
+
     const $principal = document.getElementById('principal');
     const $secondary = document.getElementById('secondary');
+
+    const $moreBubble = document.getElementById('more-bubble');
+    $moreBubble.addEventListener('click', () => showMore());
+
     let principalHtml = '';
-    _state.forEach(social => {
-      if (social.enabled) {
-        principalHtml += renderSocialMedias(social);
-      }
-    });
+    const itemsForPrincipal = _state.filter(item => item.enabled);
+    itemsForPrincipal.forEach(social => principalHtml += renderSocialMedias(social));
+
+    switch (itemsForPrincipal.length) {
+      case 0:
+      case 1:
+        $principal.classList.add('container-1');
+        break;
+      case 2:
+        $principal.classList.add('container-2');
+        break;
+      default:
+        $principal.classList.add('container-3');
+        break;
+    }
+
     let secondaryHtml = '';
-    _state.forEach(social => {
-      if (!social.enabled) {
-        secondaryHtml += renderSocialMedias(social);
-      }
-    });
+    const itemsForSecondary = _state.filter(item => !item.enabled);
+    itemsForSecondary.forEach(social => secondaryHtml += renderSocialMedias(social));
+
     $principal.innerHTML = principalHtml;
     $secondary.innerHTML = secondaryHtml;
   }
-
 }
 
 function checkUncheckSocial(key) {
   const checkBox = document.getElementById('cb-' + key);
   state[key].enabled = !checkBox.checked;
-  this.saveState();
+  saveState();
 }
 
 function renderSocialMedias(social) {
