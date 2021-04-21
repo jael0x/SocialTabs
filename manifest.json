@@ -1,9 +1,9 @@
 {
-    "name": "SocialTabs: abrir redes sociales en una nueva pestaña",
+    "name": "SocialTabs",
     "author": "jaelarmasm",
     "version": "1.0",
     "manifest_version": 2,
-    "description": "SocialTabs es una extensión para abrir las redes sociales más utilizadas en una nueva pestaña.",
+    "description": "SocialTabs es una extensión para abrir las redes sociales en una nueva pestaña.",
     "icons": {
         "16": "src/logo/logo16.png",
         "32": "src/logo/logo32.png",
@@ -11,7 +11,7 @@
         "128": "src/logo/logo128.png"
     },
     "browser_action": {
-        "default_title": "SocialTabs: abrir redes sociales en una nueva pestaña",
+        "default_title": "SocialTabs",
         "default_popup": "src/popup.html",
         "default_icon": {
             "16": "src/logo/logo16.png",

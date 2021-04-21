@@ -164,7 +164,7 @@ label:before {
     margin-right: 5px;
 }
 
-.scroll-arrows {
+.scroll-arrows-down {
     display: block;
     -ms-transform: rotate(45deg);
     /* IE 9 */
@@ -175,10 +175,21 @@ label:before {
     border-bottom: 1px solid #535554;
     width: 5px;
     height: 5px;
+    margin-top: -1px;
 }
 
-.first {
-    margin-top: -1px;
+.scroll-arrows-up {
+    display: block;
+    -ms-transform: rotate(-135deg);
+    /* IE 9 */
+    -webkit-transform: rotate(-135deg);
+    /* Chrome, Safari, Opera */
+    transform: rotate(-135deg);
+    border-right: 1px solid #535554;
+    border-bottom: 1px solid #535554;
+    width: 5px;
+    height: 5px;
+    margin-top: 2px;
 }
 
 .second {

@@ -1,4 +1,5 @@
 let state = [];
+let isDown = false;
 
 window.onload = () => {
   state = loadState();
@@ -6,18 +7,22 @@ window.onload = () => {
   render();
 };
 
-window.onmousewheel = (e) => {
-  if (e.wheelDelta < 0)
-    showMore();
-  else {
-    const secondary = document.getElementById('secondary');
-    secondary.style.display = 'none';
-  }
-}
+window.onmousewheel = e => showMore(e.wheelDelta < 0);
 
-function showMore() {
-  const secondary = document.getElementById('secondary');
-  secondary.style.display = 'grid';
+function showMore(letsDown) {
+  const $secondary = document.getElementById('secondary');
+  const $firstArrow = document.getElementById('first-arrow');
+  const $secondArrow = document.getElementById('second-arrow');
+
+  isDown = letsDown;
+
+  $secondary.style.display = letsDown ? 'grid' : 'none';
+
+  $firstArrow.classList.add('scroll-arrows-' + (letsDown ? 'up' : 'down'));
+  $secondArrow.classList.add('scroll-arrows-' + (letsDown ? 'up' : 'down'));
+
+  $firstArrow.classList.remove('scroll-arrows-' + (letsDown ? 'down' : 'up'));
+  $secondArrow.classList.remove('scroll-arrows-' + (letsDown ? 'down' : 'up'));
 }
 
 function loadState() {
@@ -89,7 +94,7 @@ function render() {
     const $secondary = document.getElementById('secondary');
 
     const $moreBubble = document.getElementById('more-bubble');
-    $moreBubble.addEventListener('click', () => showMore());
+    $moreBubble.addEventListener('click', () => showMore(!isDown));
 
     let principalHtml = '';
     const itemsForPrincipal = _state.filter(item => item.enabled);
@@ -110,7 +115,12 @@ function render() {
 
     let secondaryHtml = '';
     const itemsForSecondary = _state.filter(item => !item.enabled);
-    itemsForSecondary.forEach(social => secondaryHtml += renderSocialMedias(social));
+    if (itemsForSecondary.length > 0)
+      itemsForSecondary.forEach(social => secondaryHtml += renderSocialMedias(social));
+    else {
+      const scrollDownSection = document.getElementById('scroll-down-section');
+      scrollDownSection.style.display = 'none'
+    }
 
     $principal.innerHTML = principalHtml;
     $secondary.innerHTML = secondaryHtml;

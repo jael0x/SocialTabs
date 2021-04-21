@@ -89,6 +89,6 @@ const socialMedias = [
     name: 'twitter',
     displayName: 'Twitter',
     url: 'https://twitter.com/',
-    img: 'icons/drive.png'
+    img: 'icons/twitter.png'
   }
 ];
