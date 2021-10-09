@@ -90,5 +90,23 @@ const socialMedias = [
     displayName: 'Twitter',
     url: 'https://twitter.com/',
     img: 'icons/twitter.png'
-  }
+  },
+  {
+    name: 'tiktok',
+    displayName: 'TikTok',
+    url: 'https://www.tiktok.com/',
+    img: 'icons/tiktok.png'
+  },
+  {
+    name: 'reddit',
+    displayName: 'Reddit',
+    url: 'https://www.reddit.com/',
+    img: 'icons/reddit.png'
+  },
+  {
+    name: 'twitch',
+    displayName: 'Twitch',
+    url: 'https://www.twitch.tv/',
+    img: 'icons/twitch.png'
+  },
 ];
