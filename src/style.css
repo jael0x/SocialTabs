@@ -122,10 +122,9 @@ label:before {
     justify-content: center;
 }
 
-#icon-settings {
+#top-icon {
     position: absolute;
     right: 5px;
-    border-radius: 100%;
 }
 
 #svg {

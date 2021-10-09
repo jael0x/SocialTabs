@@ -16,13 +16,17 @@ function showMore(letsDown) {
 
   isDown = letsDown;
 
-  $secondary.style.display = letsDown ? 'grid' : 'none';
+  moreElementsToShow = state.filter(item => !item.enabled)
 
-  $firstArrow.classList.add('scroll-arrows-' + (letsDown ? 'up' : 'down'));
-  $secondArrow.classList.add('scroll-arrows-' + (letsDown ? 'up' : 'down'));
-
-  $firstArrow.classList.remove('scroll-arrows-' + (letsDown ? 'down' : 'up'));
-  $secondArrow.classList.remove('scroll-arrows-' + (letsDown ? 'down' : 'up'));
+  if(moreElementsToShow.length > 0) {
+    $secondary.style.display = letsDown ? 'grid' : 'none';
+  
+    $firstArrow.classList.add('scroll-arrows-' + (letsDown ? 'up' : 'down'));
+    $secondArrow.classList.add('scroll-arrows-' + (letsDown ? 'up' : 'down'));
+  
+    $firstArrow.classList.remove('scroll-arrows-' + (letsDown ? 'down' : 'up'));
+    $secondArrow.classList.remove('scroll-arrows-' + (letsDown ? 'down' : 'up'));
+  }
 }
 
 function loadState() {
