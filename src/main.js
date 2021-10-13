@@ -7,9 +7,9 @@ window.onload = () => {
   render();
 };
 
-window.onmousewheel = e => showMore(e.wheelDelta < 0);
+window.onmousewheel = e => showMore(e.wheelDelta < 0, true);
 
-function showMore(letsDown) {
+function showMore(letsDown, isScrolling=false) {
   const $secondary = document.getElementById('secondary');
   const $firstArrow = document.getElementById('first-arrow');
   const $secondArrow = document.getElementById('second-arrow');
@@ -18,14 +18,24 @@ function showMore(letsDown) {
 
   moreElementsToShow = state.filter(item => !item.enabled)
 
-  if(moreElementsToShow.length > 0) {
-    $secondary.style.display = letsDown ? 'grid' : 'none';
-  
-    $firstArrow.classList.add('scroll-arrows-' + (letsDown ? 'up' : 'down'));
-    $secondArrow.classList.add('scroll-arrows-' + (letsDown ? 'up' : 'down'));
-  
-    $firstArrow.classList.remove('scroll-arrows-' + (letsDown ? 'down' : 'up'));
-    $secondArrow.classList.remove('scroll-arrows-' + (letsDown ? 'down' : 'up'));
+  if (moreElementsToShow.length > 0) {
+    if (letsDown) {
+      $secondary.style.display = 'grid';
+
+      $firstArrow.classList.add('scroll-arrows-up');
+      $secondArrow.classList.add('scroll-arrows-up');
+
+      $firstArrow.classList.remove('scroll-arrows-down');
+      $secondArrow.classList.remove('scroll-arrows-down');
+    } else if (!isScrolling || window.scrollY == 0) {
+      $secondary.style.display = 'none';
+
+      $firstArrow.classList.add('scroll-arrows-down');
+      $secondArrow.classList.add('scroll-arrows-down');
+
+      $firstArrow.classList.remove('scroll-arrows-up');
+      $secondArrow.classList.remove('scroll-arrows-up');
+    }
   }
 }
 

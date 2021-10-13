@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Social Tabs",
     "version": "1.0",
-    "description": "Social Tabs allows to open the most used social networks in new tabs | Social Tabs nos permite abrir las redes sociales más utilizadas nuevas pestañas",
+    "description": "Social Tabs allows to open your social networks in new tabs | Social Tabs permite abrir tus redes sociales en nuevas pestañas",
     "author": "jaelarmasm",
     "icons": {
         "16": "src/logo/logo16.png",
