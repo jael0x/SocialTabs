@@ -92,6 +92,24 @@ const socialMedias = [
     img: 'icons/linkedin.png'
   },
   {
+    name: 'medium',
+    displayName: 'Medium',
+    url: 'https://medium.com/',
+    img: 'icons/medium.png'
+  },
+  {
+    name: 'yahoo',
+    displayName: 'Yahoo!',
+    url: 'https://mail.yahoo.com/',
+    img: 'icons/yahoo.png'
+  },
+  {
+    name: 'pinterest',
+    displayName: 'Pinterest',
+    url: 'https://www.pinterest.com/',
+    img: 'icons/pinterest.png'
+  },
+  {
     name: 'mega',
     displayName: 'Mega',
     url: 'https://mega.nz/',
