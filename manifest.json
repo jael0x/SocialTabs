@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Social Tabs",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Social Tabs allows to open your social networks in new tabs | Social Tabs permite abrir tus redes sociales en nuevas pestañas",
     "author": "jaelarmasm",
     "icons": {
@@ -22,7 +22,5 @@
     },
     "homepage_url": "https://jaelarmasm.com",
     "options_page": "src/options.html",
-    "permissions": [
-        "storage"
-    ]
+    "permissions": []
 }
